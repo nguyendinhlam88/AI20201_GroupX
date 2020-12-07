@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import gamecontrol.GameController;
+import model.Character1;
 import model.Item;
 import model.PacmanGame;
 import model.Vector1;
@@ -18,12 +20,22 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PacmanMain extends JFrame {
 
 	private JPanel contentPane;
-	private final JPanel panel = new JPanel();
-	private List<JLabel> danhSachThucAn;
+	private JPanel panel;
+	private JLabel play_pause;
+	private boolean isPlay = false;
+	private List<Character1> characterList;
+	private PacmanGame pacmanGame;
+	public static Item[][] itemList = new Item[31][28];
+	public static JLabel score;
+	private GameController game;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -39,11 +51,18 @@ public class PacmanMain extends JFrame {
 	}
 
 	public PacmanMain() {
-		danhSachThucAn = new ArrayList<JLabel>();
+		setLocationRelativeTo(null);
+		panel = new JPanel();
+		pacmanGame = PacmanGame.getInstance();
+		characterList = pacmanGame.getCharacterList();
+		setIconImage(Toolkit.getDefaultToolkit().getImage("images/pacmanL.png"));
+		setTitle("Pacman");
 		initComponents();
+		game = new GameController(panel);
 	}
 	
 	public void initComponents() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 448, 563);
 		contentPane = new JPanel();
@@ -59,57 +78,79 @@ public class PacmanMain extends JFrame {
 		
 		JLabel lbBackground = new JLabel("");
 		lbBackground.setHorizontalAlignment(SwingConstants.CENTER);
-		lbBackground.setIcon(new ImageIcon("/Users/datascience/Documents/Eclipse/AI20201GroupX/images/map.png"));
+		lbBackground.setIcon(new ImageIcon("images/map.png"));
 		lbBackground.setBounds(0, 0, 448, 507);
 		panel.add(lbBackground);
+		
+		play_pause = new JLabel("");
+		play_pause.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(isPlay == true) {
+					play_pause.setIcon(new ImageIcon("images/pause.png"));
+					isPlay = false;
+				} else {
+					play_pause.setIcon(new ImageIcon("images/play.png"));
+					isPlay = true;
+				}
+			}
+		});
+		play_pause.setIcon(new ImageIcon("images/pause.png"));
+		play_pause.setBounds(73, 503, 37, 33);
+		contentPane.add(play_pause);
 		
 		JLabel lbScore = new JLabel("Score");
 		lbScore.setFont(new Font("Bradley Hand", Font.PLAIN, 25));
 		lbScore.setForeground(new Color(255, 255, 255));
-		lbScore.setBounds(10, 509, 61, 27);
+		lbScore.setBounds(146, 509, 61, 27);
 		contentPane.add(lbScore);
 		
-		JLabel score = new JLabel("0");
+		score = new JLabel();
+		score.setText(String.valueOf(characterList.get(0).getScore()));
 		score.setForeground(new Color(255, 255, 0));
 		score.setFont(new Font("Bradley Hand", Font.BOLD | Font.ITALIC, 25));
-		score.setBounds(88, 514, 26, 16);
+		score.setBounds(219, 509, 46, 20);
 		contentPane.add(score);
 		
 		JLabel lbLives = new JLabel("Lives");
 		lbLives.setForeground(new Color(255, 255, 255));
 		lbLives.setFont(new Font("Bradley Hand", Font.PLAIN, 25));
-		lbLives.setBounds(191, 509, 61, 27);
+		lbLives.setBounds(264, 509, 61, 27);
 		contentPane.add(lbLives);
 		
 		JLabel lbPacManFake1 = new JLabel("");
-		lbPacManFake1.setIcon(new ImageIcon("/Users/datascience/Documents/Eclipse/AI20201GroupX/images/pacman5.png"));
-		lbPacManFake1.setBounds(264, 509, 26, 27);
+		lbPacManFake1.setIcon(new ImageIcon("images/pacmanR.png"));
+		lbPacManFake1.setBounds(331, 509, 26, 27);
 		contentPane.add(lbPacManFake1);
 		
 		JLabel lbPacmanPake2 = new JLabel("");
-		lbPacmanPake2.setIcon(new ImageIcon("/Users/datascience/Documents/Eclipse/AI20201GroupX/images/pacman5.png"));
-		lbPacmanPake2.setBounds(295, 509, 26, 27);
+		lbPacmanPake2.setIcon(new ImageIcon("images/pacmanR.png"));
+		lbPacmanPake2.setBounds(369, 509, 26, 27);
 		contentPane.add(lbPacmanPake2);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setBounds(316, 509, 26, 27);
 		contentPane.add(lblNewLabel_2);
+		
+		JLabel lbPlay = new JLabel("Play");
+		lbPlay.setForeground(Color.WHITE);
+		lbPlay.setFont(new Font("Bradley Hand", Font.PLAIN, 25));
+		lbPlay.setBounds(0, 509, 61, 27);
+		contentPane.add(lbPlay);
 	}
 	
 	private void updateScreen(JPanel panel) {
 		Item item = null;
 		Vector1 pos = null;
-		PacmanGame pacMan = null;
 		int[][] tilesRepresentation = null;
 		
-		pacMan = new PacmanGame();
-		tilesRepresentation = pacMan.getTilesRepresentation();
+		tilesRepresentation = PacmanGame.getTilesRepresentation();
 		
 		// i : là hàng,j là cột.
 		for(int i = 0; i < tilesRepresentation.length; i++) {
 			for(int j = 0; j < tilesRepresentation[0].length; j++) {
 				item = new Item();
-				danhSachThucAn.add(item);
+				itemList[i][j] = item;
 				pos = new Vector1(j * 16, i * 16);
 				item.setPos(pos);
 				item.setHorizontalAlignment(SwingConstants.CENTER);
@@ -122,16 +163,16 @@ public class PacmanMain extends JFrame {
 					item.setItemName("Wall");
 				} else if(tilesRepresentation[i][j] == 0) {
 					item.setItemName("Dot");
-					item.setIcon(new ImageIcon("/Users/datascience/Documents/Eclipse/AI20201GroupX/images/dot2.png"));
+					item.setIcon(new ImageIcon("images/dot2.png"));
 				} else if(tilesRepresentation[i][j] == 8) {
 					item.setItemName("BigDot");
-					item.setIcon(new ImageIcon("/Users/datascience/Documents/Eclipse/AI20201GroupX/images/dot1.png"));
-				} else if(tilesRepresentation[i][j] == 10){
-					item.setBounds(j * 16, i * 16, 25, 25);
-					item.setItemName("Pacman");
-					item.setIcon(new ImageIcon("/Users/datascience/Documents/Eclipse/AI20201GroupX/images/Pacman5.png"));
+					item.setIcon(new ImageIcon("images/dot1.png"));
 				}
 			}
+		}
+		
+		for(Character1 character : characterList) {
+			panel.add(character);
 		}
 	}
 }
