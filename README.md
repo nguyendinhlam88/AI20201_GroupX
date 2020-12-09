@@ -1,2 +1,2 @@
 # AI20201_GroupX
-Project  : Apply search algorithms to AI 
+⭐ Project  : Apply Search Algorithms to Pacman Game ⭐
