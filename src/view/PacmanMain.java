@@ -54,11 +54,13 @@ public class PacmanMain extends JFrame {
 		setLocationRelativeTo(null);
 		panel = new JPanel();
 		pacmanGame = PacmanGame.getInstance();
-		characterList = pacmanGame.getCharacterList();
+		characterList = PacmanGame.getCharacterList();
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/pacmanL.png"));
 		setTitle("Pacman");
 		initComponents();
 		game = new GameController(panel);
+		PacmanGame.updateTilesRepresentation();
+		game.movePinky();
 	}
 	
 	public void initComponents() {

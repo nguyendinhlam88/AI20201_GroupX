@@ -32,19 +32,19 @@ private int[][] tilesRepresentation;
 			btn.setBounds((tilesRepresentation[0].length - 1 - xx)*16, btn.getY(), 25, 25);
 			if(xx == 0) btn.setIcon(new ImageIcon("images/pacmanL.png"));
 			else btn.setIcon(new ImageIcon("images/pacmanR.png"));
-		} else if(e.getKeyCode() == KeyEvent.VK_UP && tilesRepresentation[yy-1][xx] != 1) {
+		} else if(e.getKeyCode() == KeyEvent.VK_UP && tilesRepresentation[yy-1][xx] != 1 && tilesRepresentation[yy-1][xx] != 2) {
 			btn.setBounds(btn.getX(), btn.getY() - 16, 25, 25);
 			updateScore(yy-1, xx);
 			btn.setIcon(new ImageIcon("images/pacmanU.png"));
-		} else if(e.getKeyCode() == KeyEvent.VK_DOWN && tilesRepresentation[yy+1][xx] != 1) {
+		} else if(e.getKeyCode() == KeyEvent.VK_DOWN && tilesRepresentation[yy+1][xx] != 1 && tilesRepresentation[yy+1][xx] != 2) {
 			btn.setBounds(btn.getX(), btn.getY() + 16, 25, 25);
 			btn.setIcon(new ImageIcon("images/pacmanD.png"));
 			updateScore(yy+1, xx);
-		} else if(e.getKeyCode() == KeyEvent.VK_LEFT && tilesRepresentation[yy][xx-1] != 1) {
+		} else if(e.getKeyCode() == KeyEvent.VK_LEFT && tilesRepresentation[yy][xx-1] != 1 && tilesRepresentation[yy][xx-1] != 2) {
 			btn.setBounds(btn.getX() - 16, btn.getY(), 25, 25);
 			btn.setIcon(new ImageIcon("images/pacmanL.png"));
 			updateScore(yy, xx-1);
-		} else if(e.getKeyCode() == KeyEvent.VK_RIGHT && tilesRepresentation[yy][xx+1] != 1) {
+		} else if(e.getKeyCode() == KeyEvent.VK_RIGHT && tilesRepresentation[yy][xx+1] != 1 && tilesRepresentation[yy][xx+1] != 2) {
 			btn.setBounds(btn.getX() + 16, btn.getY(), 25, 25);
 			btn.setIcon(new ImageIcon("images/pacmanR.png"));
 			updateScore(yy, xx+1);
