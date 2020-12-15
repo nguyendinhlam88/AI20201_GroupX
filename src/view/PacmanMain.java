@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.EventQueue;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -11,17 +10,16 @@ import javax.swing.border.EmptyBorder;
 import gamecontrol.GameController;
 import model.Character1;
 import model.Item;
+import model.Key;
 import model.PacmanGame;
 import model.Vector1;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
-import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -60,11 +58,13 @@ public class PacmanMain extends JFrame {
 		initComponents();
 		game = new GameController(panel);
 		PacmanGame.updateTilesRepresentation();
-		game.movePinky();
+		if(characterList.get(0).getX() != characterList.get(1).getX() || characterList.get(0).getY() != characterList.get(1).getY()) {
+			game.movePinky();
+		}
 	}
 	
 	public void initComponents() {
-		setResizable(false);
+	    setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 448, 563);
 		contentPane = new JPanel();
@@ -91,6 +91,7 @@ public class PacmanMain extends JFrame {
 				if(isPlay == true) {
 					play_pause.setIcon(new ImageIcon("images/pause.png"));
 					isPlay = false;
+					
 				} else {
 					play_pause.setIcon(new ImageIcon("images/play.png"));
 					isPlay = true;
@@ -104,14 +105,14 @@ public class PacmanMain extends JFrame {
 		JLabel lbScore = new JLabel("Score");
 		lbScore.setFont(new Font("Bradley Hand", Font.PLAIN, 25));
 		lbScore.setForeground(new Color(255, 255, 255));
-		lbScore.setBounds(146, 509, 61, 27);
+		lbScore.setBounds(122, 509, 61, 27);
 		contentPane.add(lbScore);
 		
 		score = new JLabel();
 		score.setText(String.valueOf(characterList.get(0).getScore()));
 		score.setForeground(new Color(255, 255, 0));
 		score.setFont(new Font("Bradley Hand", Font.BOLD | Font.ITALIC, 25));
-		score.setBounds(219, 509, 46, 20);
+		score.setBounds(195, 509, 56, 20);
 		contentPane.add(score);
 		
 		JLabel lbLives = new JLabel("Lives");

@@ -57,12 +57,12 @@ public class PacmanGame {
 		
 		character = new Character1("Pacman");
 		character.setBounds(208, 368, 25, 25);
-		character.setIcon(new ImageIcon("pacmanL.png"));
+		character.setIcon(new ImageIcon("images/pacmanL.png"));
 		characterList.add(character);
 		
 		character = new Character1("Pinky");
-		character.setBounds(208, 176, 25, 25);
-		character.setIcon(new ImageIcon("images/pinkyL.jpg"));
+		character.setBounds(208, 224, 25, 25);
+		character.setIcon(new ImageIcon("images/pinky.png"));
 		characterList.add(character);
 		
 		return null;
@@ -102,7 +102,6 @@ public class PacmanGame {
 					if(nRoad == 2 && (nLeft == nRight || nUp == nDown)) continue;
 					if(PacmanMain.itemList[i][j].getItemName().equalsIgnoreCase("Dot")) tilesRepresentation[i][j] = 5;
 					tilesRepresentation[i][j] = 4; 
-					PacmanMain.itemList[i][j].setIcon(new ImageIcon("images/dot1.png"));
 				}
 			}	
 		}
