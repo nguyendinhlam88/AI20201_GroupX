@@ -3,7 +3,7 @@
 
 ## Members
 
-| FullName        |   MSSV   |
+| FullName        |    MSSV  |
 | --------------- | --------:|
 | Nguyễn Đình Lâm | 20183574 |
 | Phùng Văn Minh  | 20183593 |
