@@ -14,6 +14,7 @@ import model.Key;
 import model.PacmanGame;
 import model.Vector1;
 import view.PacmanMain;
+
 import java.util.Random;
 
 public class GameController {
@@ -36,7 +37,7 @@ public class GameController {
 	
 	public GameController(JPanel panel) {
 		perFrame = 200;
-		pacmanGame = PacmanGame.getInstance();
+		this.pacmanGame = PacmanGame.getInstance();
 		characterList = PacmanGame.getCharacterList();
 		pacman = characterList.get(0);
 		key = new Key(pacman, PacmanGame.getTilesRepresentation());
@@ -47,35 +48,37 @@ public class GameController {
 		run();
 	}
 	
-	public void movePinky() {
+	public void movePinky(Vector1 pacLoc) {
+//		System.out.println("Siba");
 		index = 0;
 		pathToDes = new ArrayList<Vector1>();
-		pacmanLoc = new Vector1(pacman.getX()/16, pacman.getY()/16);
+		pacmanLoc = new Vector1(pacLoc.getX()/16, pacLoc.getY()/16);
 		int ranNum;
 		
+//		timeBuff = 0;
 		if(timeBuff > 0) {
 			Random random = new Random();
 			
 			while(true) {
 				ranNum = random.nextInt(5);
+				System.out.println("++++++Random+++++++" + ranNum);
 				if(ranNum == 0 && PacmanGame.getTilesRepresentation()[pinky.getY()/16 - 1][pinky.getX()/16] != 1 && PacmanGame.getTilesRepresentation()[pinky.getY()/16 - 1][pinky.getX()/16] != 2) {
-					pathToDes.add(new Vector1(pinky.getX()/16 - 1, pinky.getY()/16));
+					pathToDes.add(new Vector1(pinky.getX()/16, pinky.getY()/16 - 1));
 					break;
 				}
 				if(ranNum == 1 && PacmanGame.getTilesRepresentation()[pinky.getY()/16 + 1][pinky.getX()/16] != 1 && PacmanGame.getTilesRepresentation()[pinky.getY()/16 + 1][pinky.getX()/16] != 2) {
-					pathToDes.add(new Vector1(pinky.getX()/16 + 1, pinky.getY()/16));
+					pathToDes.add(new Vector1(pinky.getX()/16, pinky.getY()/16 + 1));
 					break;
 				}
 				if(ranNum == 2 && PacmanGame.getTilesRepresentation()[pinky.getY()/16][pinky.getX()/16 - 1] != 1 && PacmanGame.getTilesRepresentation()[pinky.getY()/16][pinky.getX()/16 - 1] != 2) {
-					if(PacmanGame.getTilesRepresentation()[pinky.getY()/16][pinky.getX()/16] == 0) pathToDes.add(new Vector1(27, pinky.getX()/16));
-					else pathToDes.add(new Vector1(pinky.getX()/16, pinky.getY()/16 - 1));
+					pathToDes.add(new Vector1(pinky.getX()/16 - 1, pinky.getY()/16));
 					break;
 				}
 				if(ranNum == 3 && PacmanGame.getTilesRepresentation()[pinky.getY()/16][pinky.getX()/16 + 1] != 1 && PacmanGame.getTilesRepresentation()[pinky.getY()/16][pinky.getX()/16 + 1] != 2) {
-					if(PacmanGame.getTilesRepresentation()[pinky.getY()/16][pinky.getX()/16] == 27) pathToDes.add(new Vector1(0, pinky.getX()/16));
-					else pathToDes.add(new Vector1(pinky.getX()/16, pinky.getY()/16 + 1));
+					pathToDes.add(new Vector1(pinky.getX()/16 + 1, pinky.getY()/16));
 					break;
 				}
+//				System.out.println("++++++Random+++++++" + ranNum);
 			}
 						
 			if(pinky.getX()/16 == 13 && pinky.getY()/16 == 14) {
@@ -86,10 +89,11 @@ public class GameController {
 			}
 			
 		} else {
+//			System.out.println("*********************");
 			if(pinky.getX()/16 == 13 && pinky.getY()/16 == 14) {
 				ghostLoc = new Vector1(13, 11);
 			} else {
-				ghostLoc = new Vector1(pacman.getX()/16, pacman.getY()/16);
+				ghostLoc = new Vector1(pinky.getX()/16, pinky.getY()/16);
 			}
 			
 			temp = ((Character1) pinky).getAlgo().AStar(ghostLoc, pacmanLoc);
@@ -99,20 +103,30 @@ public class GameController {
 			} else {
 				temp.add(0, new Vector1(pinky.getX()/16, pinky.getY()/16));
 			}
-			temp.add(new Vector1(pacman.getX()/16, pacman.getY()/16));
+			temp.add(pacmanLoc);
 			
 			pathToDes.add(temp.get(0));
 			
+//			for(int i = 0; i < temp.size(); i++) {
+//				System.out.println("######" + temp.get(i).getX() + " : " + temp.get(i).getY() + "######");
+//			}
+			
 			for(int i = 0; i < temp.size()-1; i++) {
 				createPathToDes(temp.get(i), temp.get(i+1));
-				if(Key.isPress() == true && Key.isRelease() == false) return;
+				if(Key.isPress() == true) return;
 			}
 			
 			if(pinky.getX()/16 == 13 && pinky.getY()/16 == 14) {
-				pathToDes.add(0, new Vector1(13, 14));
+//				pathToDes.add(0, new Vector1(13, 14));
 				pathToDes.add(1, new Vector1(13, 13));
 				pathToDes.add(2, new Vector1(13, 12));
 			}	
+//			System.out.println("*********************");
+			
+//			for (int i = 0; i < pathToDes.size(); i++) {
+//				System.out.println("+++++" + pathToDes.get(i).getX() + " : " + pathToDes.get(i).getY() + "+++++++");
+//			}
+
 		}
 	}
 	
@@ -127,12 +141,12 @@ public class GameController {
 					pathToDes.add(new Vector1(curr.getX(), curr.getY() + 1));
 					curr.setY(curr.getY() + 1);
 				}
-				if(Key.isPress() == true && Key.isRelease() == false) return;
+				if(Key.isPress() == true) return;
 			}
 		} else if(curr.getY() == des.getY()) {
 			while(curr.getX() != des.getX()) {
 				if(curr.getX() > des.getX()) {
-					if(curr.getY() == 14 && des.getX() < 7 && curr.getX() > 20) {
+					if(curr.getY() == 14 && des.getX() < 7 && curr.getX() > 21) {
 						if(curr.getX() == 27) {
 							pathToDes.add(new Vector1(0, curr.getY()));
 							curr.setX(0);
@@ -145,7 +159,7 @@ public class GameController {
 						curr.setX(curr.getX() - 1);
 					}
 				} else {
-					if(curr.getY() == 14 && curr.getX() < 7 && des.getX() > 20) {
+					if(curr.getY() == 14 && curr.getX() < 7 && des.getX() > 21) {
 						if(curr.getX() == 0) {
 							pathToDes.add(new Vector1(27, curr.getY()));
 							curr.setX(27);
@@ -158,7 +172,7 @@ public class GameController {
 						curr.setX(curr.getX() + 1);
 					}
 				}
-				if(Key.isPress() == true && Key.isRelease() == false) return;
+				if(Key.isPress() == true) return;
 			}
 		} 
 	}
@@ -197,6 +211,10 @@ public class GameController {
 				if(timeBuff > perFrame) timeBuff -= perFrame;
 				else timeBuff = 0;
 				
+				if(Integer.parseInt(PacmanMain.score.getText()) % 50 == 0 && Integer.parseInt(PacmanMain.score.getText()) != 0) {
+					perFrame -= 10;
+				}
+				
 				if(index < pathToDes.size() && pathToDes.get(index) != null) {
 					if(pinky.getX() == pathToDes.get(index).getX()*16) {
 						if(pinky.getY() < pathToDes.get(index).getY()*16)
@@ -207,13 +225,14 @@ public class GameController {
 							pinky.setIcon(new ImageIcon("images/pinkyL.png"));
 						else pinky.setIcon(new ImageIcon("images/pinkyR.png"));
 					}
+					if(PacmanGame.getTilesRepresentation()[pathToDes.get(index).getY()][pathToDes.get(index).getX()] == 1 || PacmanGame.getTilesRepresentation()[pathToDes.get(index).getY()][pathToDes.get(index).getX()] == 2) movePinky(new Vector1(pacman.getX(), pacman.getY()));
 					pinky.setBounds(pathToDes.get(index).getX()*16, pathToDes.get(index).getY()*16, 25, 25);
 					index++;
 					checkLoss();
-					if(Key.isPress() == true && Key.isRelease() == false) {
+					if(Key.isPress() == true || (Key.isRelease() == true && (pathToDes.get(pathToDes.size() - 1).getX() != pacman.getX()/16 || pathToDes.get(pathToDes.size() - 1).getY() != pacman.getY()/16)) || index > pathToDes.size()) {
 						Key.setPress(false);
 						Key.setRelease(true);
-						movePinky();
+						movePinky(new Vector1(pacman.getX(), pacman.getY()));
 					}
 					checkWin();
 				}
@@ -223,6 +242,6 @@ public class GameController {
 	}
 	
 	public static void setTimeBuff() {
-		timeBuff = 1000;
+		timeBuff = 5000;
 	}
 }

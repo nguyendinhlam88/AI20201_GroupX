@@ -59,7 +59,7 @@ public class PacmanMain extends JFrame {
 		game = new GameController(panel);
 		PacmanGame.updateTilesRepresentation();
 		if(characterList.get(0).getX() != characterList.get(1).getX() || characterList.get(0).getY() != characterList.get(1).getY()) {
-			game.movePinky();
+			game.movePinky(new Vector1(characterList.get(0).getX(), characterList.get(0).getY()));
 		}
 	}
 	

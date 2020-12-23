@@ -83,9 +83,9 @@ public class Key implements KeyListener {
 			PacmanMain.itemList[xx][yy].setItemName("Space");
  		} else if(PacmanMain.itemList[xx][yy].getItemName().equals("BigDot")) {
  			Character1.score += 3;
- 			GameController.setTimeBuff();
  			PacmanMain.itemList[xx][yy].setIcon(null);
  			PacmanMain.itemList[xx][yy].setItemName("Space");
+ 			GameController.setTimeBuff();
  		}
 		PacmanMain.score.setText(String.valueOf(Character1.score));
 	}

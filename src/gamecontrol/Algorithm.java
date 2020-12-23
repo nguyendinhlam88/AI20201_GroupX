@@ -23,10 +23,10 @@ public class Algorithm {
 		weight[0] = 1;
 		weight[1] = 1;
 		weight[2] = 1;
-		weight[3] = 1;
+		weight[3] = -1;
 		weight[4] = 1;
 		
-		characterName = characterName;
+		this.characterName = characterName;
 	}
 	
 	/*
@@ -59,7 +59,7 @@ public class Algorithm {
 			}
 			sample[0][4] = (currU.getX() - pacLoc.getX())*(currU.getX() - pacLoc.getX()) + (currU.getY() - pacLoc.getY())*(currU.getY() - pacLoc.getY());
 		} else {
-			while(presentU != 5 && presentU != 4 && checked[currU.getY()][currU.getX()] != 1) {
+			while(presentU != 5 && presentU != 4 && checked[currU.getY()][currU.getX()] != 1 && presentU != 1 && presentU != 2) {
 				// add cost
 				sample[0][0] += 1;
 				// add score
@@ -77,8 +77,10 @@ public class Algorithm {
 						if(characterList.get(i).getX() == currU.getX()*16 && characterList.get(i).getY() == currU.getY()*16) sample[0][3] += 1;
 					}
 				}
+//				System.out.println("X : " + currU.getX() + ", Y : " + currU.getY());
 				currU.setY(currU.getY()-1);
 				presentU = tilesRepresentation[currU.getY()][currU.getX()];
+//				System.out.println(presentU);
 			}
 			if(checked[currU.getY()][currU.getX()] == 1) sample[0][4] = 0;
 			else {
@@ -92,9 +94,10 @@ public class Algorithm {
 				sample[0][4] = (currU.getX() - pacLoc.getX())*(currU.getX() - pacLoc.getX()) + (currU.getY() - pacLoc.getY())*(currU.getY() - pacLoc.getY());
 			}
 		}
-		System.out.println("+++++++++++++++++++++++++++++++");
-		System.out.println("Ghost : " + curr.getX() + " : " + curr.getY());
-		System.out.println("CurrU : " + currU.getX() + " : " + currU.getY());
+//		System.out.println("+++++++++++++++++++++++++++++++");
+//		System.out.println("Pacman : " + pacLoc.getX() + " : " + pacLoc.getY());
+//		System.out.println("Ghost : " + curr.getX() + " : " + curr.getY());
+//		System.out.println("CurrU : " + currU.getX() + " : " + currU.getY());
 		
 		// Check hướng Down.
 		currD.setY(currD.getY()+1);
@@ -110,7 +113,7 @@ public class Algorithm {
 			}
 			sample[1][4] = (currD.getX() - pacLoc.getX())*(currD.getX() - pacLoc.getX()) + (currD.getY() - pacLoc.getY())*(currD.getY() - pacLoc.getY());
 		} else {
-			while(presentD != 5 && presentD != 4 && checked[currD.getY()][currD.getX()] != 1) {
+			while(presentD != 5 && presentD != 4 && checked[currD.getY()][currD.getX()] != 1 && presentD != 1 && presentU != 2) {
 				// add cost
 				sample[1][0] += 1;
 				// add score
@@ -130,7 +133,6 @@ public class Algorithm {
 				}
 				currD.setY(currD.getY()+1);
 				presentD = tilesRepresentation[currD.getY()][currD.getX()];
-
 			}
 			if(checked[currD.getY()][currD.getX()] == 1) sample[1][4] = 0;
 			else {
@@ -144,7 +146,7 @@ public class Algorithm {
 				sample[1][4] = (currD.getX() - pacLoc.getX())*(currD.getX() - pacLoc.getX()) + (currD.getY() - pacLoc.getY())*(currD.getY() - pacLoc.getY());
 			}
 		}
-		System.out.println("CurrD : " + currD.getX() + " : " + currD.getY());
+//		System.out.println("CurrD : " + currD.getX() + " : " + currD.getY());
 
 		
 		// Check Left.
@@ -164,7 +166,7 @@ public class Algorithm {
 			}
 			sample[2][4] = (currL.getX() - pacLoc.getX())*(currL.getX() - pacLoc.getX()) + (currL.getY() - pacLoc.getY())*(currL.getY() - pacLoc.getY());
 		} else {
-			while(presentL != 5 && presentL != 4 && checked[currL.getY()][currL.getX()] != 1) {
+			while(presentL != 5 && presentL != 4 && checked[currL.getY()][currL.getX()] != 1 && presentL != 1 && presentL != 2) {
 				// add cost
 				sample[2][0] += 1;
 				// add score
@@ -201,7 +203,7 @@ public class Algorithm {
 				sample[2][4] = (currL.getX() - pacLoc.getX())*(currL.getX() - pacLoc.getX()) + (currL.getY() - pacLoc.getY())*(currL.getY() - pacLoc.getY());
 			}
 		}
-		System.out.println("CurrL : " + currL.getX() + " : " + currL.getY());
+//		System.out.println("CurrL : " + currL.getX() + " : " + currL.getY());
 
 		
 		// Check Right.
@@ -221,7 +223,7 @@ public class Algorithm {
 			}
 			sample[3][4] = (currR.getX() - pacLoc.getX())*(currR.getX() - pacLoc.getX()) + (currR.getY() - pacLoc.getY())*(currR.getY() - pacLoc.getY());
 		} else {
-			while(presentR != 5 && presentR != 4 && checked[currR.getY()][currR.getX()] != 1) {
+			while(presentR != 5 && presentR != 4 && checked[currR.getY()][currR.getX()] != 1 && presentR != 1 && presentR != 2) {
 				// add cost
 				sample[3][0] += 1;
 				// add score
@@ -260,8 +262,8 @@ public class Algorithm {
 				sample[3][4] = (currR.getX() - pacLoc.getX())*(currR.getX() - pacLoc.getX()) + (currR.getY() - pacLoc.getY())*(currR.getY() - pacLoc.getY());
 			}
 		}
-		System.out.println("CurrR : " + currR.getX() + " : " + currR.getY());
-		System.out.println("+++++++++++++++++++++++++++++++");
+//		System.out.println("CurrR : " + currR.getX() + " : " + currR.getY());
+//		System.out.println("+++++++++++++++++++++++++++++++");
 
 	}
 	
@@ -276,26 +278,30 @@ public class Algorithm {
 		int presentUP = tilesRepresentation[currUP.getY()][currUP.getX()];
 		if(presentUP == 1 || presentUP == 2 || presentUP == 5 || presentUP == 4);
 		else {
-			while(presentUP != 5 && presentUP != 4) {
-				System.out.println("ahhaah");
+			while(presentUP != 5 && presentUP != 4 || presentUP == 1 || presentUP == 2) {
 				if(currUP.getY() == 0) break;
 				currUP.setY(currUP.getY()-1);
 				presentUP = tilesRepresentation[currUP.getY()][currUP.getX()];
 			}
 		}
+//		System.out.println("=========================");
+//		System.out.println("Pacman  : " + pacLoc.getX() + " : " + pacLoc.getY());
+//		System.out.println("Pacman Up : " + currUP.getX() + " : " + currUP.getY());
+		
 		
 		// Check hướng Down.
 		currDP.setY(currDP.getY()+1);
 		int presentDP = tilesRepresentation[currDP.getY()][currDP.getX()];
 		if(presentDP == 1 || presentDP == 2 || presentDP == 5 || presentDP == 4);
 		else {
-			while(presentDP != 5 && presentDP != 4) {
-				System.out.println("ahhaah1");
+			while(presentDP != 5 && presentDP != 4 || presentDP == 1 || presentDP == 2) {
 				if(currDP.getY() == 30) break;
 				currDP.setY(currDP.getY()+1);
 				presentDP = tilesRepresentation[currDP.getY()][currDP.getX()];
 			}
 		}
+//		System.out.println("Pacman Down : " + currDP.getX() + " : " + currDP.getY());
+
 		
 		// Check Left.
 		if(currLP.getX() == 0) {
@@ -307,8 +313,7 @@ public class Algorithm {
 		int presentLP = tilesRepresentation[currLP.getY()][currLP.getX()];
 		if(presentLP == 1 || presentLP == 2 || presentLP == 5 || presentLP == 4);
 		else {
-			while(presentLP != 5 && presentLP != 4) {
-				System.out.println("ahhaah2");
+			while(presentLP != 5 && presentLP != 4 || presentLP == 1 || presentLP == 2) {
 				if(currLP.getX() == 0 && tilesRepresentation[currLP.getY()][0] == 1) break;
 				else {
 					if(currLP.getX() == 0) {
@@ -320,6 +325,8 @@ public class Algorithm {
 				}
 			}
 		}	
+//		System.out.println("Pacman Left : " + currLP.getX() + " : " + currLP.getY());
+
 		
 		// Check Right.
 		if(currRP.getX() == 27) {
@@ -331,8 +338,7 @@ public class Algorithm {
 		int presentRP = tilesRepresentation[currRP.getY()][currRP.getX()];
 		if(presentRP == 1 || presentRP == 2 || presentRP == 5 || presentRP == 4);
 		else {
-			while(presentRP != 5 && presentRP != 4) {
-				System.out.println("ahhaah");
+			while(presentRP != 5 && presentRP != 4 || presentRP == 1 || presentRP == 2) {
 				if(currRP.getX() == 27 && tilesRepresentation[currRP.getY()][0] == 1) break;
 				else {
 					if(currRP.getX() == 27) {
@@ -344,6 +350,9 @@ public class Algorithm {
 				}
 			}
 		}
+//		System.out.println("Pacman Right : " + currRP.getX() + " : " + currRP.getY());
+//		System.out.println("=========================");
+
 	}
 	
 	boolean checkEnd(Vector1 curr) {
@@ -371,6 +380,7 @@ public class Algorithm {
 			if(direct == 1) curr = new Vector1(currD.getX(), currD.getY());
 			if(direct == 2) curr = new Vector1(currL.getX(), currL.getY());
 			if(direct == 3) curr = new Vector1(currR.getX(), currR.getY());
+//			System.out.println("Result : " + curr.getX() + " : " + curr.getY() + "********");
 			pathToDes.add(curr);
 			checked[curr.getY()][curr.getX()] = 1;
 		}	
@@ -413,7 +423,6 @@ public class Algorithm {
 				min = cost;
 				index = i;
 			}
-			System.out.println(index);
 		}
 		
 		for(int j = 0; j < 5; j++) {
