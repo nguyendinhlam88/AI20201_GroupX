@@ -22,7 +22,7 @@
 cd Desktop
 ```
 
-3. Using "git clone" commands in terminal(mac) or Command Prompt(window):
+3. Using "git clone" command  in terminal(mac) or Command Prompt(window):
 
 ```
 git clone + https://github.com/nguyendinhlam88/AI20201_GroupX.git
