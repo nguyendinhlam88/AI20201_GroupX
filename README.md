@@ -1,6 +1,15 @@
 # AI20201_GroupX
 ⭐ Project  : Apply Search Algorithms to Pacman Game ⭐
 
+## Members
+
+| FullName        |    MSSV  |
+| --------------- | --------:|
+| Nguyễn Đình Lâm | 20183574 |
+| Phùng Văn Minh  | 20183593 |
+| Trần Tiến Mạnh  | 20180135 |
+| Trịnh Xuân Tùng | 20183663 |
+
 ## How to clone this project
 
 1. Install git(Not installed)
