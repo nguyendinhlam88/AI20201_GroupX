@@ -5,16 +5,22 @@
 
 1. Install git(Not installed)
 
-[Install](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [Install](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-2. Using "git clone" commands in terminal(mac) or Command Prompt(window)(Navigate to your desired's directory using *cd*):
+2. Open terminal or command prompt and using command to navigate to your desktop(optional):
 
 ```
-git clone [this repo](https://github.com/nguyendinhlam88/AI20201_GroupX.git)
+cd Desktop
+```
+
+3. Using "git clone" commands in terminal(mac) or Command Prompt(window):
+
+```
+git clone + https://github.com/nguyendinhlam88/AI20201_GroupX.git
 ``` 
 3. Open eclipse and import this repo
 
-> File \> Import \> General \> Project from Folder or Achive \> Project or Achive \> choose a folder
+> File \> Import \> General \> Project from Folder or Achive \> Project or Achive \> Pick a folder
 
 4. Run
 
