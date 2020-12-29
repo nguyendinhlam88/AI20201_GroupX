@@ -36,7 +36,7 @@ public class GameController {
 	// ----------AStar---------------
 	
 	public GameController(JPanel panel) {
-		perFrame = 200;
+		perFrame = 180;
 		this.pacmanGame = PacmanGame.getInstance();
 		characterList = PacmanGame.getCharacterList();
 		pacman = characterList.get(0);
@@ -48,6 +48,7 @@ public class GameController {
 		run();
 	}
 	
+	// +++++++++++++++++++++++++++++++++++++++++++++++Astar+++++++++++++++++++++++++++++++++++++++++++++++
 	public void movePinky(Vector1 pacLoc) {
 //		System.out.println("Siba");
 		index = 0;
@@ -61,7 +62,7 @@ public class GameController {
 			
 			while(true) {
 				ranNum = random.nextInt(5);
-				System.out.println("++++++Random+++++++" + ranNum);
+//				System.out.println("++++++Random+++++++" + ranNum);
 				if(ranNum == 0 && PacmanGame.getTilesRepresentation()[pinky.getY()/16 - 1][pinky.getX()/16] != 1 && PacmanGame.getTilesRepresentation()[pinky.getY()/16 - 1][pinky.getX()/16] != 2) {
 					pathToDes.add(new Vector1(pinky.getX()/16, pinky.getY()/16 - 1));
 					break;
@@ -125,6 +126,7 @@ public class GameController {
 			
 //			for (int i = 0; i < pathToDes.size(); i++) {
 //				System.out.println("+++++" + pathToDes.get(i).getX() + " : " + pathToDes.get(i).getY() + "+++++++");
+//				System.out.println("+++++Ghost" + pinky.getX()/16 + " : " + pinky.getY()/16 + "+++++++");
 //			}
 
 		}
@@ -202,7 +204,7 @@ public class GameController {
 		timer.stop();
 	}
 	
-	
+	// +++++++++++++++++++++++++++++++++++++++++++++++Astar+++++++++++++++++++++++++++++++++++++++++++++++
 	public void run() {
 		timer = new Timer(perFrame, new ActionListener() {
 			
@@ -211,10 +213,12 @@ public class GameController {
 				if(timeBuff > perFrame) timeBuff -= perFrame;
 				else timeBuff = 0;
 				
-				if(Integer.parseInt(PacmanMain.score.getText()) % 50 == 0 && Integer.parseInt(PacmanMain.score.getText()) != 0) {
+				if(perFrame >= 80 && Integer.parseInt(PacmanMain.score.getText()) % 50 == 0 && Integer.parseInt(PacmanMain.score.getText()) != 0) {
 					perFrame -= 10;
 				}
 				
+				// +++++++++++++++++++++++++++++++++++++++++++++++Astar+++++++++++++++++++++++++++++++++++++++++++++++
+
 				if(index < pathToDes.size() && pathToDes.get(index) != null) {
 					if(pinky.getX() == pathToDes.get(index).getX()*16) {
 						if(pinky.getY() < pathToDes.get(index).getY()*16)
@@ -229,13 +233,15 @@ public class GameController {
 					pinky.setBounds(pathToDes.get(index).getX()*16, pathToDes.get(index).getY()*16, 25, 25);
 					index++;
 					checkLoss();
-					if(Key.isPress() == true || (Key.isRelease() == true && (pathToDes.get(pathToDes.size() - 1).getX() != pacman.getX()/16 || pathToDes.get(pathToDes.size() - 1).getY() != pacman.getY()/16)) || index > pathToDes.size()) {
+					if((Key.isPress() == true && Key.isRelease() == false && (((pathToDes.size() - index) > 3 && index % 3 == 0) || (pathToDes.size() - index) < 3)) || (Key.isRelease() == true && Key.isPress() == false && (pathToDes.get(pathToDes.size() - 1).getX() != pacman.getX()/16 || pathToDes.get(pathToDes.size() - 1).getY() != pacman.getY()/16) && index == pathToDes.size())) {
 						Key.setPress(false);
 						Key.setRelease(true);
 						movePinky(new Vector1(pacman.getX(), pacman.getY()));
 					}
 					checkWin();
 				}
+				// +++++++++++++++++++++++++++++++++++++++++++++++Astar+++++++++++++++++++++++++++++++++++++++++++++++
+
 			}
 		});
 		timer.start();

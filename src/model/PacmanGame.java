@@ -11,7 +11,14 @@ public class PacmanGame {
 	
 	private static PacmanGame instance;
 	private static List<Character1> characterList;
-	// 28 * 31 : 
+	/* map size : 28 * 31
+	 * 1 : wall
+	 * 0 : dot
+	 * 6 : blank
+	 * 8 : big dot
+	 * 2 : for ghost(Pacman can't move in here).  
+	 */
+	
 	private static int[][] tilesRepresentation = { 
 	  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 
 	  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, 
@@ -87,6 +94,10 @@ public class PacmanGame {
 		return instance;
 	}
 	
+	/* Update các ngã rẽ  
+	 * 5 : ngã rẽ + có dot
+	 * 4 : ngã rẽ thôi
+	 */
 	public static void updateTilesRepresentation() {
 		for(int i = 1; i < tilesRepresentation.length; i++) {
 			for(int j = 1; j < tilesRepresentation[0].length; j++) {

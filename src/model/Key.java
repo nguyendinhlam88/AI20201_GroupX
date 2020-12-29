@@ -30,7 +30,7 @@ public class Key implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		int xx = btn.getX()/16;
 		int yy = btn.getY()/16;
-		
+
 		if((xx == 0 && e.getKeyCode() == KeyEvent.VK_LEFT)  || (xx == 27 && e.getKeyCode() == KeyEvent.VK_RIGHT)) {
 			btn.setBounds((tilesRepresentation[0].length - 1 - xx)*16, btn.getY(), 25, 25);
 			if(xx == 0) btn.setIcon(new ImageIcon("images/pacmanL.png"));

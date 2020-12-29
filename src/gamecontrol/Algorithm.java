@@ -18,12 +18,12 @@ public class Algorithm {
 	private Vector1 currUP, currDP, currLP, currRP; // Pacman
 	private int[][] checked = new int[31][28];
 	private int[] preCost = new int[5];
-	// -------------------------------------
+	// +++++++++++++++++++++++++++++++++++++++++++++++Astar+++++++++++++++++++++++++++++++++++++++++++++++
 	public Algorithm(String characterName) {
 		weight[0] = 1;
 		weight[1] = 1;
 		weight[2] = 1;
-		weight[3] = -1;
+		weight[3] = 1;
 		weight[4] = 1;
 		
 		this.characterName = characterName;
@@ -35,7 +35,7 @@ public class Algorithm {
 	 *  	+ score : Điểm kiếm được nếu pacman đi theo đường(x1).
 	 *  	+ nBigBot : Số lượng BigDot(x2).
   	 *      + nGhost : Số lượng ghost trên đường đi(x3)
-  	 *      + distance : khoảng cách Manhattan(x4).
+  	 *      + distance : khoảng cách euclid^2(x4).
 	 *  Output : danh sách các ngã rẽ nối tiếp nhau.
 	 */
 	
@@ -200,7 +200,11 @@ public class Algorithm {
 						if(characterList.get(i).getX() == currL.getX()*16 && characterList.get(i).getY() == currL.getY()*16) sample[2][3] += 1;
 					}
 				}
-				sample[2][4] = (currL.getX() - pacLoc.getX())*(currL.getX() - pacLoc.getX()) + (currL.getY() - pacLoc.getY())*(currL.getY() - pacLoc.getY());
+				if(pacLoc.getY() == 13 && currL.getY() == 13 && pacLoc.getX() > 20 && currL.getX() < 7) {
+					sample[2][4] = (currL.getX() + 29 - pacLoc.getX()) * (currL.getX() + 29 - pacLoc.getX());
+				} else {
+					sample[2][4] = (currL.getX() - pacLoc.getX())*(currL.getX() - pacLoc.getX()) + (currL.getY() - pacLoc.getY())*(currL.getY() - pacLoc.getY());
+				}
 			}
 		}
 //		System.out.println("CurrL : " + currL.getX() + " : " + currL.getY());
@@ -259,7 +263,11 @@ public class Algorithm {
 						if(characterList.get(i).getX() == currR.getX()*16 && characterList.get(i).getY() == currR.getY()*16) sample[3][3] += 1;
 					}
 				}
-				sample[3][4] = (currR.getX() - pacLoc.getX())*(currR.getX() - pacLoc.getX()) + (currR.getY() - pacLoc.getY())*(currR.getY() - pacLoc.getY());
+				if(pacLoc.getY() == 13 && currL.getY() == 13 && currR.getX() > 20 && pacLoc.getX() < 7) {
+					sample[3][4] = (pacLoc.getX() + 29 - currL.getX()) * pacLoc.getX() + 29 - currL.getX();
+				} else {
+					sample[3][4] = (currR.getX() - pacLoc.getX())*(currR.getX() - pacLoc.getX()) + (currR.getY() - pacLoc.getY())*(currR.getY() - pacLoc.getY());
+				}
 			}
 		}
 //		System.out.println("CurrR : " + currR.getX() + " : " + currR.getY());
@@ -365,7 +373,9 @@ public class Algorithm {
 	
 	public ArrayList<Vector1> AStar(Vector1 ghostLoc, Vector1 pacLoc) {
 		int direct;
+		Vector1 preLoc;
 		
+		preLoc = new Vector1(pacLoc.getX(), pacLoc.getY());
 		initSample();
 		initCheck();
 		pathToDes = new ArrayList<Vector1>();
@@ -376,6 +386,7 @@ public class Algorithm {
 			initSample();
 			nearCornerForGhost(curr, pacLoc);
 			direct = computeCost();
+			preLoc = new Vector1(curr.getX(), curr.getY());
 			if(direct == 0) curr = new Vector1(currU.getX(), currU.getY());
 			if(direct == 1) curr = new Vector1(currD.getX(), currD.getY());
 			if(direct == 2) curr = new Vector1(currL.getX(), currL.getY());
@@ -383,6 +394,7 @@ public class Algorithm {
 //			System.out.println("Result : " + curr.getX() + " : " + curr.getY() + "********");
 			pathToDes.add(curr);
 			checked[curr.getY()][curr.getX()] = 1;
+			if(preLoc.getX() == 12 || preLoc.getX() == 13) checked[curr.getY()][27 - curr.getX()] = 1;
 		}	
 		return pathToDes;
 	}
@@ -431,4 +443,6 @@ public class Algorithm {
 		
 		return index;
 	}
+	// +++++++++++++++++++++++++++++++++++++++++++++++Astar+++++++++++++++++++++++++++++++++++++++++++++++
+
 }
