@@ -24,7 +24,7 @@ public class Algorithm {
 		weight[1] = 1;
 		weight[2] = 1;
 		weight[3] = 1;
-		weight[4] = 1;
+		weight[4] = 2;
 		
 		this.characterName = characterName;
 	}
