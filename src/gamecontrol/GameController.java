@@ -33,6 +33,7 @@ public class GameController {
 	private Vector1 pacmanLoc;
 	private static double timeBuff;
 	private int perFrame;
+	private int incre = 0;
 	// ----------AStar---------------
 	
 	public GameController(JPanel panel) {
@@ -90,6 +91,48 @@ public class GameController {
 			}
 			
 		} else {
+			if(PacmanGame.getTilesRepresentation()[pinky.getX()/16][pinky.getX()/16] != 2) {
+				// Nếu đường thông suốt thì đi thẳng. 
+				if(pinky.getX() == pacLoc.getX() && pinky.getY() < pacLoc.getY()) {
+					for(int i = pinky.getY()/16; i <= pacLoc.getY()/16; i++) {
+						if(PacmanGame.getTilesRepresentation()[i][pinky.getX()/16] != 1 || PacmanGame.getTilesRepresentation()[i][pinky.getX()/16] != 2) {
+							pathToDes.add(new Vector1(pinky.getX()/16, i));
+							continue;
+						}
+						break;
+					}
+					if(!pathToDes.isEmpty() && pathToDes.size() == (pacLoc.getY()/16 - pinky.getY()/16 + 1)) return;
+				} else if(pinky.getX() == pacLoc.getX() && pinky.getY() > pacLoc.getY()) {
+					for(int i = pinky.getY()/16; i >= pacLoc.getY()/16; i--) {
+						if(PacmanGame.getTilesRepresentation()[i][pinky.getX()/16] != 1 || PacmanGame.getTilesRepresentation()[i][pinky.getX()/16] != 2) {
+							pathToDes.add(new Vector1(pinky.getX()/16, i));
+							continue;
+						}
+						break;
+					}
+					if(!pathToDes.isEmpty() && pathToDes.size() == (pinky.getY()/16 - pacLoc.getY()/16 + 1)) return;
+				} else if(pinky.getY() == pacLoc.getY() && pinky.getX() < pacLoc.getX()) {
+					for(int i = pacLoc.getX()/16; i <= pinky.getX()/16; i++) {
+						if(PacmanGame.getTilesRepresentation()[pinky.getY()/16][i] != 1 || PacmanGame.getTilesRepresentation()[pinky.getY()/16][i] != 2) {
+							pathToDes.add(new Vector1(i, pinky.getY()/16));
+							continue;
+						}
+						break;
+					}
+					if(!pathToDes.isEmpty() && pathToDes.size() == (pinky.getX()/16 - pacLoc.getX()/16 + 1)) return;
+				} else if(pinky.getY() == pacLoc.getY() && pinky.getX() > pacLoc.getX()) {
+					for(int i = pinky.getX()/16; i >= pacLoc.getX()/16; i--) {
+						if(PacmanGame.getTilesRepresentation()[pinky.getY()/16][i] != 1 || PacmanGame.getTilesRepresentation()[pinky.getY()/16][i] != 2) {
+							pathToDes.add(new Vector1(i, pinky.getY()/16));
+							continue;
+						}
+						break;
+					}
+					if(!pathToDes.isEmpty() && pathToDes.size() == (pinky.getX()/16 - pacLoc.getX()/16 + 1)) return;
+				}
+			}
+			
+			pathToDes.clear();
 //			System.out.println("*********************");
 			if(pinky.getX()/16 == 13 && pinky.getY()/16 == 14) {
 				ghostLoc = new Vector1(13, 11);
@@ -213,7 +256,8 @@ public class GameController {
 				if(timeBuff > perFrame) timeBuff -= perFrame;
 				else timeBuff = 0;
 				
-				if(perFrame >= 80 && Integer.parseInt(PacmanMain.score.getText()) % 50 == 0 && Integer.parseInt(PacmanMain.score.getText()) != 0) {
+				if(perFrame >= 80 && (Integer.parseInt(PacmanMain.score.getText()) - incre) >= 50 && Integer.parseInt(PacmanMain.score.getText()) != 0) {
+					incre += 50;
 					perFrame -= 10;
 				}
 				
@@ -233,7 +277,7 @@ public class GameController {
 					pinky.setBounds(pathToDes.get(index).getX()*16, pathToDes.get(index).getY()*16, 25, 25);
 					index++;
 					checkLoss();
-					if((Key.isPress() == true && Key.isRelease() == false && (((pathToDes.size() - index) > 3 && index % 3 == 0) || (pathToDes.size() - index) < 3)) || (Key.isRelease() == true && Key.isPress() == false && (pathToDes.get(pathToDes.size() - 1).getX() != pacman.getX()/16 || pathToDes.get(pathToDes.size() - 1).getY() != pacman.getY()/16) && index == pathToDes.size())) {
+					if(timeBuff > 0 || (Key.isPress() == true && Key.isRelease() == false && (((pathToDes.size() - index) > 3 && index % 3 == 0) || (pathToDes.size() - index) < 3)) || (Key.isRelease() == true && Key.isPress() == false && (pathToDes.get(pathToDes.size() - 1).getX() != pacman.getX()/16 || pathToDes.get(pathToDes.size() - 1).getY() != pacman.getY()/16) && index == pathToDes.size())) {
 						Key.setPress(false);
 						Key.setRelease(true);
 						movePinky(new Vector1(pacman.getX(), pacman.getY()));
@@ -248,6 +292,6 @@ public class GameController {
 	}
 	
 	public static void setTimeBuff() {
-		timeBuff = 5000;
+		timeBuff = 1500;
 	}
 }

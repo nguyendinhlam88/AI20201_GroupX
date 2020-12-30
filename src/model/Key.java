@@ -5,8 +5,6 @@ import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-
 import gamecontrol.GameController;
 import view.PacmanMain;
 
