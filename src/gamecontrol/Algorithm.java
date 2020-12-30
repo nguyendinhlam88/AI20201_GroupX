@@ -25,9 +25,15 @@ public class Algorithm {
 		weight[0] = 1;
 		weight[1] = 1;
 		weight[2] = 1;
+<<<<<<< HEAD
 		weight[3] = -1;
 		weight[4] = 2;
 		weight[5] = 0;
+=======
+		weight[3] = 1;
+		weight[4] = 2;
+		
+>>>>>>> 1da32413d5a96ac9bd32416ee413f565054649c6
 		this.characterName = characterName;
 	}
 	
