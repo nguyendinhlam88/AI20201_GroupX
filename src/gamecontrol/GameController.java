@@ -144,7 +144,7 @@ public class GameController {
 			long endTime = System.currentTimeMillis();
 			System.out.println("Số nút phải duyệt Astar : temp.size());
 			System.out.println("Thời gian duyệt : " + (endTime - startTime));
-			System.out.println("Số điểm hoa quả gặp phải nếu đi theo đường đấy : " +  );
+			System.out.println("Số điểm hoa quả gặp phải nếu đi theo đường đấy : " +  pinky.getScoreForAstar() + " điểm.");
 			
 			if(pinky.getX()/16 == 13 && pinky.getY()/16 == 14) {
 				temp.add(0, new Vector1(13, 11));
