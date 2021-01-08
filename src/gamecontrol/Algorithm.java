@@ -502,7 +502,7 @@ public class Algorithm {
 		return preCost[1];
 	}
 	
-	public int numNode() {
+	public int getNumNode() {
 		return numNode;
 	}
 	// +++++++++++++++++++++++++++++++++++++++++++++++Astar++++++++++++++++++++++++++++++++++++++++++++++
