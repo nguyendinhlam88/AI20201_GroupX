@@ -142,7 +142,7 @@ public class GameController {
 			long startTime = System.currentTimeMillis();
 			temp = ((Character1) pinky).getAlgo().AStar(ghostLoc, pacmanLoc);
 			long endTime = System.currentTimeMillis();
-			System.out.println("Số nút phải duyệt Astar : temp.size());
+			System.out.println("Số nút phải duyệt Astar : pinky.getNumNode());
 			System.out.println("Thời gian duyệt : " + (endTime - startTime));
 			System.out.println("Số điểm hoa quả gặp phải nếu đi theo đường đấy : " +  pinky.getScoreForAstar() + " điểm.");
 			
