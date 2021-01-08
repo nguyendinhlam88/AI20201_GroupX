@@ -139,8 +139,12 @@ public class GameController {
 			} else {
 				ghostLoc = new Vector1(pinky.getX()/16, pinky.getY()/16);
 			}
-			
+			long startTime = System.currentTimeMillis();
 			temp = ((Character1) pinky).getAlgo().AStar(ghostLoc, pacmanLoc);
+			long endTime = System.currentTimeMillis();
+			System.out.println("Số nút phải duyệt Astar : temp.size());
+			System.out.println("Thời gian duyệt : " + (endTime - startTime));
+			System.out.println("Số điểm hoa quả gặp phải nếu đi theo đường đấy : " +  );
 			
 			if(pinky.getX()/16 == 13 && pinky.getY()/16 == 14) {
 				temp.add(0, new Vector1(13, 11));
