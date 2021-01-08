@@ -20,6 +20,7 @@ public class Algorithm {
 	private int[] preCost = new int[6]; // Chi phí cùa hàm g(n).
 	private int[] earnedScore = new int[4]; // Số điểm kiếm được nếu pacman đi theo hướng đó. [0] : Up, [1] : Down, [2]] : Left, [3] : Right.
 	private Vector1 goodLoc = new Vector1(1, 2);
+	private int numNode; // Số lượng nút duyệt.
 	// +++++++++++++++++++++++++++++++++++++++++++++++Astar+++++++++++++++++++++++++++++++++++++++++++++++
 	public Algorithm(String characterName) {
 		weight[0] = 1;
@@ -422,6 +423,7 @@ public class Algorithm {
 		int direct;
 		Vector1 preLoc;
 		
+		numNode = 0;
 		preLoc = new Vector1(pacLoc.getX(), pacLoc.getY());
 		initSample();
 		initCheck();
@@ -479,6 +481,7 @@ public class Algorithm {
 			if(sample[i][4] == 0) {
 				continue;
 			}
+			numNode += 1;
 			for(int j = 0; j < sample[0].length; j++) {
 				cost += (sample[i][j] + preCost[j])*weight[j];
 			}
@@ -497,6 +500,10 @@ public class Algorithm {
 	
 	public int getScoreForAstar() {
 		return preCost[1];
+	}
+	
+	public int numNode() {
+		return numNode;
 	}
 	// +++++++++++++++++++++++++++++++++++++++++++++++Astar++++++++++++++++++++++++++++++++++++++++++++++
 }
